@@ -2,6 +2,6 @@
 <h2>Add a new comment</h2>
 <form action="{% url "blog_app:post_comment" post.id %}" method="post">
 {{ comment_form | crispy }}
-{% csrf_token %}
+{% csrf_token %} <!--Якщо токен не співпадає з тим, який згенеровано сервером, або якщо його взагалі немає, Django відхиляє запит як потенційну атаку CSRF-->
 <p><input type="submit" value="Add comment"></p>
 </form>

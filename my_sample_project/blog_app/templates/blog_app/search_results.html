@@ -1,0 +1,28 @@
+{% extends 'blog_app/base.html' %}
+
+{% block content %}
+    <!-- Я можу створювати базову структуру шаблону і повторно використовувати її для різних сторінок, змінюючи лише певні частини (блоки). -->
+    <h1>Результати пошуку</h1>
+<!--    {% debug %} &lt;!&ndash; Виведення змісту змінних та контексту шаблону &ndash;&gt;-->
+
+     {% autoescape on %}
+        <p>{{ some_variable }}</p>
+    {% endautoescape %}
+    {% if results %}
+        <ul>
+            {% for post in results %}
+                <li class="{% cycle 'odd' 'even' %}">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                    <p>{{ post.text|truncatewords:20 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="{% cycle 'text-danger' 'text-success' %}">Нічого не знайдено.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% comment %}
+    Це коментар, який не буде відображений на сторінці.
+{% endcomment %}
