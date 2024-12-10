@@ -1,37 +1,38 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="border-radius:10px !important; background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="border-radius:10px !important; background-color: #2C2C2C;">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{% url 'blog_app:posts' %}">{{ settings.APP_NAME }}</a>
+    <a class="navbar-brand" href="{% url 'blog_app:posts' %}" style="color: #9400D3;">{{ settings.APP_NAME }}</a>
     <ul class="navbar-nav">
       {% url 'blog_app:posts' as x %}
       <li {% if request.get_full_path == x %}class="active"{% endif %}>
-          <a class="nav-link" href="{% url 'blog_app:posts' %}" role="button">All posts</a></li>
+          <a class="nav-link" href="{% url 'blog_app:posts' %}" role="button" style="color: #BA55D3;">All posts</a></li>
       <li {% if request.get_full_path == x %}class="active"{% endif %}>
-          <a class="nav-link" href="{% url 'blog_app:my_posts' %}" role="button">My posts</a></li>
+          <a class="nav-link" href="{% url 'blog_app:my_posts' %}" role="button" style="color: #BA55D3;">My posts</a></li>
     </ul>
     <ul class="navbar-nav">
       {% if user.is_authenticated %}
       <li>
-         <a class="nav-link" href="{% url 'blog_app:create_post' %}">Create Post</a>
+         <a class="nav-link" href="{% url 'blog_app:create_post' %}" style="color: #BA55D3;">Create Post</a>
       </li>
       <li class="nav-item dropdown">
-         <a class="nav-link dropdown-toggle" href="#" id="rightnavDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+         <a class="nav-link dropdown-toggle" href="#" id="rightnavDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: #9400D3;">
         </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="rightnavDropdown">
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="rightnavDropdown" style="background-color: #2C2C2C;">
             <form action="{% url 'logout' %}" method="post">
-                <button class="btn btn-link" type="submit">{{user.username}} |Logout</button>
+                <button class="btn btn-link" type="submit" style="color: #BA55D3;">{{user.username}} | Logout</button>
                 {% csrf_token %}
             </form>
         </ul>
        </li>
        {% else %}
-       <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={% url 'blog_app:posts' %}">Login</a></li>
+       <li class="nav-item"><a class="nav-link" href="{% url 'login' %}?next={% url 'blog_app:posts' %}" style="color: #BA55D3;">Login</a></li>
        {% endif %}
     </ul>
 
     <!-- Форма пошуку -->
     <form action="{% url 'blog_app:search' %}" method="get" class="d-flex ms-auto">
-        <input type="text" name="q" placeholder="Пошук..." class="form-control me-2" />
-        <button type="submit" class="btn btn-outline-success">Шукати</button>
+        <input type="text" name="q" placeholder="Пошук..." class="form-control me-2" style="background-color: #2C2C2C; color: #9400D3; border: 1px solid #9400D3;" />
+        <button type="submit" class="btn btn-outline-success" style="color: #9400D3; border-color: #9400D3;">Шукати</button>
     </form>
   </div>
 </nav>
+

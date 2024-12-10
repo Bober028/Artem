@@ -1,39 +1,39 @@
-{%extends 'blog_app/base.html' %}
+{% extends 'blog_app/base.html' %}
 
 {% block content %}
-<h1>{{blogpost.title}} </h1>
-<p>
-{{blogpost.text}}
-</p>
-
-<p class="text-muted">
-    <i>Author: {{blogpost.owner}}</i><br/>
-    <i>Status: {{blogpost.get_status_display}}</i><br/>
-    <i>Created at: {{blogpost.updated_at}}</i><br/>
-    <i>Published at: {{blogpost.published_at}}</i><br/>
-    <i>Updated at: {{blogpost.updated_at}}</i>
-</p>
-
-{% with blogpost.comments.count as total_comments %}
-<h2>
-{{ total_comments }} comment{{ total_comments|pluralize }}:
-</h2>
-{% endwith %}
-
-
-{%for comment in blogpost.comments.all%}
-<div class="comment">
-    <p class="info">
-    Comment {{ forloop.counter }} by {{ comment.name }}
-    {{ comment.created }}
+<div style="background-color: #2C2C2C; color: #9400D3; padding: 20px; border-radius: 10px;">
+    <h1>{{ blogpost.title }}</h1>
+    <p style="color: #BA55D3;">
+        {{ blogpost.text }}
     </p>
-    {{ comment.body|linebreaks }}
+
+    <p class="text-muted" style="color: #DDA0DD;">
+        <i>Author: {{ blogpost.owner }}</i><br />
+        <i>Status: {{ blogpost.get_status_display }}</i><br />
+        <i>Created at: {{ blogpost.created_at }}</i><br />
+        <i>Published at: {{ blogpost.published_at }}</i><br />
+        <i>Updated at: {{ blogpost.updated_at }}</i>
+    </p>
+
+    {% with blogpost.comments.count as total_comments %}
+    <h2 style="color: #DA70D6;">
+        {{ total_comments }} comment{{ total_comments|pluralize }}:
+    </h2>
+    {% endwith %}
+
+    {% for comment in blogpost.comments.all %}
+    <div class="comment" style="margin-bottom: 15px; border: 1px solid #9400D3; padding: 10px; border-radius: 5px;">
+        <p class="info" style="color: #EE82EE;">
+            Comment {{ forloop.counter }} by {{ comment.name }} ({{ comment.created }})
+        </p>
+        <p style="color: #D8BFD8;">{{ comment.body|linebreaks }}</p>
+    </div>
+    {% empty %}
+    <p style="color: #EE82EE;">There are no comments.</p>
+    {% endfor %}
+
+    <div style="margin-top: 20px;">
+        {% include 'blog_app/includes/comment_form.html' with post=blogpost %}
+    </div>
 </div>
-{% empty %}
-    <p>There are no comments.</p>
-{% endfor %}
-
-{%include 'blog_app/includes/comment_form.html' with post=blogpost %}
-
-{%endblock%}
-
+{% endblock %}

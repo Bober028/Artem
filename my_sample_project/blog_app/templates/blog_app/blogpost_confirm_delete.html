@@ -1,11 +1,18 @@
-{%extends 'blog_app/base.html' %}
+{% extends 'blog_app/base.html' %}
 
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ blogpost.title }}"?</p>
-    {{ form }}
-    <input type="submit" value="Confirm">
-</form>
+<div style="background-color: #2C2C2C; color: #9400D3; padding: 20px; border-radius: 10px; text-align: center;">
+    <form method="post">
+        {% csrf_token %}
+        <p style="color: #EE82EE; font-size: 18px;">
+            Are you sure you want to delete "<strong>{{ blogpost.title }}</strong>"?
+        </p>
+        <div style="margin: 15px;">
+            {{ form }}
+        </div>
+        <input type="submit" value="Confirm"
+               style="background-color: #9400D3; color: white; border: none; padding: 10px 20px;
+                      border-radius: 5px; cursor: pointer; font-size: 16px;">
+    </form>
+</div>
 {% endblock %}
-

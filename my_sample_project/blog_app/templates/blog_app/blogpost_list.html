@@ -1,43 +1,43 @@
-{%extends 'blog_app/base.html' %}
+{% extends 'blog_app/base.html' %}
 
-{%block content%}
-<h2>All posts:</h2>
-{% comment %} <ul> {% endcomment %}
-   {% for blogpost in page_obj %}
-   {% comment %} <li> {% endcomment %}
-   <h2><a href="{{ blogpost.get_absolute_url }}">{{ blogpost.title }}</a></h2>
-   <p class="text-muted">
-    Published {{ blogpost.published_at }} by {{ blogpost.owner }}
-    </p>
-   {{ blogpost.text|truncatewords:30 }}
+{% block content %}
+<div style="background-color: #2C2C2C; color: #9400D3; padding: 20px; border-radius: 10px;">
+    <h2 style="color: #BA55D3;">All posts:</h2>
+    {% for blogpost in page_obj %}
+        <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #BA55D3; border-radius: 5px;">
+            <h2>
+                <a href="{{ blogpost.get_absolute_url }}" style="color: #BA55D3;">{{ blogpost.title }}</a>
+            </h2>
+            <p class="text-muted" style="color: #DDA0DD;">
+                Published {{ blogpost.published_at }} by {{ blogpost.owner }}
+            </p>
+            <p>{{ blogpost.text|truncatewords:30 }}</p>
 
-   {% if blogpost.owner == user %}
-   ( <a href="{% url 'blog_app:update_post' blogpost.id %}">
-      Edit</a> |
-   <a href="{% url 'blog_app:delete_post' blogpost.id %}">
-      Delete</a>)
-   {% endif %}
-   <br/><br/>
-   {% comment %} </li> {% endcomment %}
-   {% endfor %}
-   
-{% comment %} </ul> {% endcomment %}
+            {% if blogpost.owner == user %}
+                <p>
+                    (<a href="{% url 'blog_app:update_post' blogpost.id %}" style="color: #DA70D6;">Edit</a> |
+                    <a href="{% url 'blog_app:delete_post' blogpost.id %}" style="color: #DA70D6;">Delete</a>)
+                </p>
+            {% endif %}
+        </div>
+    {% endfor %}
 
-<div class="pagination">
-   <span class="step-links">
-       {% if page_obj.has_previous %}
-           <a href="?page=1">&laquo; first</a>
-           <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-       {% endif %}
+    <div class="pagination" style="margin-top: 20px;">
+        <span class="step-links" style="color: #BA55D3;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" style="color: #DA70D6;">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" style="color: #DA70D6;">previous</a>
+            {% endif %}
 
-       <span class="current">
-           Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-       </span>
+            <span class="current" style="color: #BA55D3;">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
 
-       {% if page_obj.has_next %}
-           <a href="?page={{ page_obj.next_page_number }}">next</a>
-           <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-       {% endif %}
-   </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" style="color: #DA70D6;">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" style="color: #DA70D6;">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </div>
-{%endblock%}
+{% endblock %}

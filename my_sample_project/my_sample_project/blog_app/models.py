@@ -6,11 +6,15 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 
+
 class PublishedPostsManager(models.Manager):
+    """Менеджер для вибору лише опублікованих постів."""
     def get_queryset(self):
         return super().get_queryset().filter(status=BlogPost.PublicationStatus.PUBLISHED)
 
+
 class BlogPost(models.Model):
+    """Модель для постів блогу."""
     class Meta:
         ordering = ['-published_at']
 
@@ -30,15 +34,17 @@ class BlogPost(models.Model):
     published_at = models.DateTimeField(default=timezone.now, verbose_name=_("Published At"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Created At"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Updated At"))
-    tags = TaggableManager(verbose_name=_("Tags"))
+    tags = TaggableManager(verbose_name=_("Tags"))  # Поле для тегів
 
+    # Менеджери
     objects = models.Manager()  # Стандартний менеджер
-    published_objects = PublishedPostsManager()
+    published_objects = PublishedPostsManager()  # Менеджер для публікацій
 
     def __str__(self):
         return f"{self.title} | by {self.owner.username}"
 
     def get_absolute_url(self):
+        """Повертає URL для конкретного поста."""
         return reverse(
             'blog_app:post',
             args=[
@@ -50,6 +56,7 @@ class BlogPost(models.Model):
         )
 
     def save(self, *args, **kwargs):
+        """Автоматичне оновлення часу публікації та генерація slug."""
         if self.pk:
             previous = BlogPost.objects.get(pk=self.pk)
             if previous.status == BlogPost.PublicationStatus.DRAFT and \
@@ -58,7 +65,9 @@ class BlogPost(models.Model):
         self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
+
 class Comment(models.Model):
+    """Модель для коментарів до постів."""
     post = models.ForeignKey(
         BlogPost,
         on_delete=models.CASCADE,
@@ -79,4 +88,4 @@ class Comment(models.Model):
         verbose_name_plural = _("Comments")
 
     def __str__(self):
-        return f"Comment by {self.name} on {self.post.title}"
+        return f'Comment by {self.name} on {self.post}'

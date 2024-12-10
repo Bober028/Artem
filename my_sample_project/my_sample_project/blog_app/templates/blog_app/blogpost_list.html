@@ -1,0 +1,43 @@
+{%extends 'blog_app/base.html' %}
+
+{%block content%}
+<h2>All posts:</h2>
+{% comment %} <ul> {% endcomment %}
+   {% for blogpost in page_obj %}
+   {% comment %} <li> {% endcomment %}
+   <h2><a href="{{ blogpost.get_absolute_url }}">{{ blogpost.title }}</a></h2>
+   <p class="text-muted">
+    Published {{ blogpost.published_at }} by {{ blogpost.owner }}
+    </p>
+   {{ blogpost.text|truncatewords:30 }}
+
+   {% if blogpost.owner == user %}
+   ( <a href="{% url 'blog_app:update_post' blogpost.id %}">
+      Edit</a> |
+   <a href="{% url 'blog_app:delete_post' blogpost.id %}">
+      Delete</a>)
+   {% endif %}
+   <br/><br/>
+   {% comment %} </li> {% endcomment %}
+   {% endfor %}
+   
+{% comment %} </ul> {% endcomment %}
+
+<div class="pagination">
+   <span class="step-links">
+       {% if page_obj.has_previous %}
+           <a href="?page=1">&laquo; first</a>
+           <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+       {% endif %}
+
+       <span class="current">
+           Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+       </span>
+
+       {% if page_obj.has_next %}
+           <a href="?page={{ page_obj.next_page_number }}">next</a>
+           <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+       {% endif %}
+   </span>
+</div>
+{%endblock%}

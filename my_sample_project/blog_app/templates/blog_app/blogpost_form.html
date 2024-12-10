@@ -1,10 +1,22 @@
-{%extends 'blog_app/base.html' %}
+{% extends 'blog_app/base.html' %}
 
 {% load crispy_forms_tags %}
 {% block content %}
-<form method="post">
-    {% csrf_token %}
-    {{ form | crispy}}
-    <input type="submit" value="Update">
- </form>
- {% endblock %}
+<div style="background-color: #2C2C2C; color: #9400D3; padding: 20px; border-radius: 10px;">
+    <form method="post" style="margin: 0 auto; max-width: 600px;">
+        {% csrf_token %}
+        <div style="color: #BA55D3;">
+            {{ form|crispy }}
+        </div>
+        <input type="submit" value="Update" style="
+            background-color: #9400D3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        ">
+    </form>
+</div>
+{% endblock %}

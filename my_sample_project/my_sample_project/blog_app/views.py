@@ -103,8 +103,11 @@ def search_posts(request):
         # Використовуємо фільтрацію по заголовку
         results = results.filter(title__icontains=query)  # Пошук по заголовку
 
+    # Створюємо змінну, яку передамо в шаблон
+    some_variable = "Це тестова змінна яку ми передамо в шаблон <b>Тестуємо HTML</b>"
+
     # Передаємо results та some_variable в контекст шаблону
-    return render(request, 'blog_app/search_results.html', {'results': results, 'query': query,})
+    return render(request, 'blog_app/search_results.html', {'results': results, 'query': query, 'some_variable': some_variable})
 
 
 

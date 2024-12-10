@@ -1,13 +1,32 @@
 {% extends 'blog_app/base.html' %}
 
 {% block content %}
-    <!-- Я можу створювати базову структуру шаблону і повторно використовувати її для різних сторінок, змінюючи лише певні частини (блоки). -->
-    <h1>Результати пошуку</h1>
-<!--    {% debug %} &lt;!&ndash; Виведення змісту змінних та контексту шаблону &ndash;&gt;-->
+    <style>
+        body {
+            background-color: #000; /* Чорний фон */
+            color: #9400D3; /* Фіолетовий текст */
+            font-family: Arial, sans-serif;
+        }
+        a {
+            color: #8A2BE2; /* Темно-фіолетовий для посилань */
+            text-decoration: none;
+        }
+        a:hover {
+            color: #BA55D3; /* Світліший фіолетовий при наведенні */
+        }
+        h1, h2, h3 {
+            color: #DA70D6; /* Інший відтінок фіолетового для заголовків */
+        }
+        p.text-danger {
+            color: red;
+        }
+        p.text-success {
+            color: green;
+        }
+    </style>
 
-     {% autoescape on %}
-        <p>{{ some_variable }}</p>
-    {% endautoescape %}
+    <h1>Результати пошуку</h1>
+    <!--    {% debug %} -->
     {% if results %}
         <ul>
             {% for post in results %}
